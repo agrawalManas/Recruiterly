@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "772143121343",
+    "project_id": "recruiterly-69ba7",
+    "storage_bucket": "recruiterly-69ba7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772143121343:android:87b3277bb36f827644570a",
+        "android_client_info": {
+          "package_name": "com.example.recruiterly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4um23sBaBJw19ViWxy5jlx_2CvqIn4dI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
