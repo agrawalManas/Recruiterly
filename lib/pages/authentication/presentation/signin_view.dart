@@ -76,7 +76,7 @@ class _SigninViewState extends State<SigninView> {
               isRequired: true,
               labelText: 'Password',
               hintText: 'Enter your password here',
-              obscure: true,
+              isPasswordFiled: true,
               controller: _passWordController,
               textInputAction: TextInputAction.done,
             ),

@@ -22,7 +22,7 @@ class CustomTextfieldWithLabel extends StatefulWidget {
     this.hintText,
     this.errorText,
     this.suffixIcon,
-    this.obscure,
+    this.isPasswordFiled = false,
     this.validator,
     this.onChanged,
     this.inputFormatters,
@@ -64,7 +64,7 @@ class CustomTextfieldWithLabel extends StatefulWidget {
   final String? errorText;
   final Widget? suffixIcon;
   final List<TextInputFormatter>? inputFormatters;
-  final bool? obscure;
+  final bool isPasswordFiled;
   final Function(String)? onChanged;
   final Function()? onTap;
   final String? Function(String?)? validator;
@@ -103,6 +103,7 @@ class _CustomTextfieldWithLabelState extends State<CustomTextfieldWithLabel> {
   final FocusNode _focusNode = FocusNode();
   Color _focusedBorderColor = AppColors.primary;
   final user = dependencyLocator<UserModel>();
+  late ValueNotifier<bool> _passwordFieldNotifier;
 
   @override
   void initState() {
@@ -110,6 +111,7 @@ class _CustomTextfieldWithLabelState extends State<CustomTextfieldWithLabel> {
     customSuffixIcon = widget.suffixIcon;
     fieldIsNotEmpty = widget.controller?.text.isNotEmpty ?? false;
     _focusedBorderColor = (user.role ?? 'none').userRole.accentColor;
+    _passwordFieldNotifier = ValueNotifier<bool>(widget.isPasswordFiled);
   }
 
   @override
@@ -146,90 +148,112 @@ class _CustomTextfieldWithLabelState extends State<CustomTextfieldWithLabel> {
           ),
           6.verticalSpace,
         ],
-        TextFormField(
-          onTap: widget.onTap,
-          readOnly: widget.readOnly,
-          style: widget.textStyle ??
-              AppTextStyles.body3Regular14(color: AppColors.textPrimary),
-          focusNode: _focusNode,
-          onTapOutside: (_) {
-            _focusNode.unfocus();
+        ValueListenableBuilder<bool>(
+          valueListenable: _passwordFieldNotifier,
+          builder: (context, value, child) {
+            return TextFormField(
+              onTap: widget.onTap,
+              readOnly: widget.readOnly,
+              style: widget.textStyle ??
+                  AppTextStyles.body3Regular14(color: AppColors.textPrimary),
+              focusNode: _focusNode,
+              onTapOutside: (_) {
+                _focusNode.unfocus();
+              },
+              obscureText: value,
+              textAlign: widget.textAlign,
+              maxLines: widget.maxLines,
+              minLines: widget.minLines,
+              keyboardType: widget.textInputType,
+              textAlignVertical: widget.textAlignVertical,
+              textInputAction: widget.textInputAction ?? TextInputAction.next,
+              controller: widget.controller,
+              enabled: widget.enabled,
+              inputFormatters: widget.inputFormatters,
+              autofocus: widget.autoFocus ?? false,
+              validator: widget.validator,
+              initialValue: widget.initialValue,
+              onChanged: widget.onChanged,
+              autocorrect: widget.autocorrect ?? true,
+              onSaved: widget.onSaved,
+              textCapitalization: widget.textCapitalization,
+              decoration: InputDecoration(
+                prefixIcon: (widget.prefixIcon == null)
+                    ? widget.isPasswordFiled
+                        ? value
+                            ? GestureDetector(
+                                onTap: () {
+                                  _passwordFieldNotifier.value = false;
+                                },
+                                child: const Icon(Icons.visibility_off),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  _passwordFieldNotifier.value = true;
+                                },
+                                child: const Icon(Icons.visibility),
+                              )
+                        : null
+                    : widget.prefixIcon,
+                fillColor: widget.fillColor ?? AppColors.background,
+                filled: true,
+                hintText: widget.hintText,
+                errorStyle: AppTextStyles.body4Regular12(
+                  color: AppColors.error,
+                ),
+                labelStyle: widget.labelStyle ??
+                    AppTextStyles.body3Regular14(
+                      color: AppColors.textSecondary,
+                    ),
+                hintStyle: widget.hintStyle ??
+                    AppTextStyles.body4Regular12(
+                      color: AppColors.textSecondary,
+                    ),
+                alignLabelWithHint: false,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    widget.borderRadius ?? 24.r,
+                  ),
+                  borderSide: BorderSide(
+                    color: AppColors.textSecondary.withOpacity(0.2),
+                    width: widget.borderWidth,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(widget.borderRadius ?? 24.r),
+                  ),
+                  borderSide: BorderSide(
+                    color: AppColors.error,
+                    width: widget.borderWidth,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    widget.borderRadius ?? 24.r,
+                  ),
+                  borderSide: BorderSide(
+                    color: AppColors.textSecondary.withOpacity(0.2),
+                    width: widget.borderWidth,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    widget.borderRadius ?? 24.r,
+                  ),
+                  borderSide: BorderSide(
+                    color: _focusedBorderColor,
+                    width: widget.borderWidth,
+                  ),
+                ),
+                contentPadding: widget.contentPadding ??
+                    EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                    ),
+                suffixIcon: widget.suffixIcon,
+              ),
+            );
           },
-          textAlign: widget.textAlign,
-          maxLines: widget.maxLines,
-          minLines: widget.minLines,
-          keyboardType: widget.textInputType,
-          textAlignVertical: widget.textAlignVertical,
-          textInputAction: widget.textInputAction ?? TextInputAction.next,
-          controller: widget.controller,
-          enabled: widget.enabled,
-          inputFormatters: widget.inputFormatters,
-          autofocus: widget.autoFocus ?? false,
-          validator: widget.validator,
-          initialValue: widget.initialValue,
-          onChanged: widget.onChanged,
-          autocorrect: widget.autocorrect ?? true,
-          onSaved: widget.onSaved,
-          textCapitalization: widget.textCapitalization,
-          decoration: InputDecoration(
-            prefixIcon: widget.prefixIcon,
-            fillColor: widget.fillColor ?? AppColors.background,
-            filled: true,
-            hintText: widget.hintText,
-            errorStyle: AppTextStyles.body4Regular12(
-              color: AppColors.error,
-            ),
-            labelStyle: widget.labelStyle ??
-                AppTextStyles.body3Regular14(
-                  color: AppColors.textSecondary,
-                ),
-            hintStyle: widget.hintStyle ??
-                AppTextStyles.body4Regular12(
-                  color: AppColors.textSecondary,
-                ),
-            alignLabelWithHint: false,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                widget.borderRadius ?? 24.r,
-              ),
-              borderSide: BorderSide(
-                color: AppColors.textSecondary.withOpacity(0.2),
-                width: widget.borderWidth,
-              ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(widget.borderRadius ?? 24.r),
-              ),
-              borderSide: BorderSide(
-                color: AppColors.error,
-                width: widget.borderWidth,
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                widget.borderRadius ?? 24.r,
-              ),
-              borderSide: BorderSide(
-                color: AppColors.textSecondary.withOpacity(0.2),
-                width: widget.borderWidth,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                widget.borderRadius ?? 24.r,
-              ),
-              borderSide: BorderSide(
-                color: _focusedBorderColor,
-                width: widget.borderWidth,
-              ),
-            ),
-            contentPadding: widget.contentPadding ??
-                EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                ),
-            suffixIcon: widget.suffixIcon,
-          ),
         ),
         if (widget.errorText?.isNotEmpty == true) ...[
           2.verticalSpace,
