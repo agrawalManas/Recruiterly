@@ -3,6 +3,7 @@ import 'package:cades_flutter_template/common/image_loader.dart';
 import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
 import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
 import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
+import 'package:cades_flutter_template/common/utils/utils.dart';
 import 'package:cades_flutter_template/common/widgets/button/custom_button.dart';
 import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
 import 'package:cades_flutter_template/pages/job_listing/domain/job_listing_cubit.dart';
@@ -325,6 +326,7 @@ class JobOverviewCard extends StatelessWidget {
                       disableElevation: true,
                       onPressed: () {
                         // AppRoutes.appRouter.push('/view-applicants/$jobId');
+                        Utils.showToast(message: 'Coming soon!');
                       },
                       child: Text(
                         'View Applicants',
