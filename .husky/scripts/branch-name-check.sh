@@ -3,12 +3,8 @@
 # This script checks branch names against this project's convention
 # Project patterns: feat/, api/, config/, fix/
 
-BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-# For new branches, get it from the command arguments
-if [ -z "$BRANCH_NAME" ] || [ "$BRANCH_NAME" = "HEAD" ]; then
-  # Get the branch name from the git checkout command
-  BRANCH_NAME=$(echo "$2" | grep -oE '[^/]+$')
-fi
+# Get the new branch name from the command arguments
+BRANCH_NAME=$(echo "$2" | grep -oE '[^/]+$')
 
 # Define your specific branch naming pattern
 PATTERN="^(feat|api|config|fix)\/[a-z0-9]+(-[a-z0-9]+)*$"
