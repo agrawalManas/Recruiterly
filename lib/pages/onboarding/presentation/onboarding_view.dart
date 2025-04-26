@@ -125,22 +125,30 @@ class _OnboardingViewState extends State<OnboardingView> {
 
                 //---------CONTINUE-BUTTON
                 Expanded(
-                  child: CustomButton(
-                    width: MediaQuery.sizeOf(context).width,
-                    verticalPadding: 8.h,
-                    horizontalPadding: 8.w,
-                    wantBorder: false,
-                    disableElevation: true,
-                    // isLoading: state.onboardingStatus == ApiStatus.loading,
-                    onPressed: () {
-                      _onboardingCubit.onPageChange(context: context);
+                  child: BlocBuilder<OnboardingCubit, OnboardingState>(
+                    builder: (context, state) {
+                      return CustomButton(
+                        width: MediaQuery.sizeOf(context).width,
+                        verticalPadding: 8.h,
+                        horizontalPadding: 8.w,
+                        wantBorder: false,
+                        disableElevation: true,
+                        isLoading: state.continueOnboardingApiStatus ==
+                            ApiStatus.loading,
+                        onPressed: () {
+                          if (state.continueOnboardingApiStatus !=
+                              ApiStatus.loading) {
+                            _onboardingCubit.onPageChange(context: context);
+                          }
+                        },
+                        child: Text(
+                          state.currentPage == 2 ? 'Complete' : 'Continue',
+                          style: AppTextStyles.body2Medium16(
+                            color: AppColors.surface,
+                          ),
+                        ),
+                      );
                     },
-                    child: Text(
-                      state.currentPage == 2 ? 'Complete' : 'Continue',
-                      style: AppTextStyles.body2Medium16(
-                        color: AppColors.surface,
-                      ),
-                    ),
                   ),
                 ),
               ],

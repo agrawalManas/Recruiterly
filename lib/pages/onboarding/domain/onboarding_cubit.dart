@@ -115,6 +115,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     } catch (error) {
       log('Error in step $page validation: ${error.toString()}');
       Utils.showToast(message: 'Failed to update details at the moment!');
+      emit(state.copyWith(continueOnboardingApiStatus: ApiStatus.failure));
       return false;
     }
     return false;
