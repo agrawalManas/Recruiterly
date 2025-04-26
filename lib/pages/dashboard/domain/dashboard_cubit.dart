@@ -44,25 +44,27 @@ class DashboardCubit extends Cubit<DashboardState> {
   }
 
   Future<void> getJobFilters() async {
-    emit(state.copyWith(jobFiltersApiStatus: ApiStatus.loading));
-    try {
-      final result = await _firestore.collection('jobFilters').get();
-      Map<String, dynamic> jsonData =
-          result.docs.firstOrNull?.data() as Map<String, dynamic>;
-      final filters = Filters.JobFilterModel.fromMap(jsonData);
-      dependencyLocator.registerSingleton<Filters.JobFilterModel>(
-        Filters.JobFilterModel.fromMap(jsonData),
-      );
-      emit(
-        state.copyWith(
-          jobFiltersApiStatus: ApiStatus.success,
-          filters: filters,
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(jobFiltersApiStatus: ApiStatus.failure));
-      log('Error while fetching job filters- ${error.toString()}');
-      // Utils.showToast(message: 'Something went wrong while getting filters');
+    if (!dependencyLocator.isRegistered<Filters.JobFilterModel>()) {
+      emit(state.copyWith(jobFiltersApiStatus: ApiStatus.loading));
+      try {
+        final result = await _firestore.collection('jobFilters').get();
+        Map<String, dynamic> jsonData =
+            result.docs.firstOrNull?.data() as Map<String, dynamic>;
+        final filters = Filters.JobFilterModel.fromMap(jsonData);
+        dependencyLocator.registerSingleton<Filters.JobFilterModel>(
+          Filters.JobFilterModel.fromMap(jsonData),
+        );
+        emit(
+          state.copyWith(
+            jobFiltersApiStatus: ApiStatus.success,
+            filters: filters,
+          ),
+        );
+      } catch (error) {
+        emit(state.copyWith(jobFiltersApiStatus: ApiStatus.failure));
+        log('Error while fetching job filters- ${error.toString()}');
+        // Utils.showToast(message: 'Something went wrong while getting filters');
+      }
     }
   }
 
@@ -130,10 +132,12 @@ class DashboardCubit extends Cubit<DashboardState> {
             appliedJobs.add(ApplicationModel.fromMap(jsonData));
           }
         }
-        dependencyLocator.unregister<List<ApplicationModel>>();
-        dependencyLocator.registerSingleton<List<ApplicationModel>>(
-          appliedJobs,
-        );
+        if (dependencyLocator.isRegistered<List<ApplicationModel>>()) {
+          dependencyLocator.unregister<List<ApplicationModel>>();
+          dependencyLocator.registerSingleton<List<ApplicationModel>>(
+            appliedJobs,
+          );
+        }
         emit(
           state.copyWith(
             getAppliedJobsApiStatus: ApiStatus.success,

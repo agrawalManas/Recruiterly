@@ -65,13 +65,13 @@ class FilterOptionWithHeader<T> extends StatelessWidget {
                         backgroundColor: AppColors.background
                             .withOpacity(value == index ? 1.0 : 0.9),
                         text: getFilterOptionText(filterOptions[index]),
-                        blurRadius: value == index ? 12 : 4,
-                        spreadRadius: value == index ? 4 : 1,
-                        glowColor: value == index
-                            ? context.userRole.accentColor.withOpacity(
-                                0.4,
-                              )
-                            : AppColors.textSecondary.withOpacity(0.3),
+                        // blurRadius: value == index ? 12 : 4,
+                        // spreadRadius: value == index ? 4 : 1,
+                        // glowColor: value == index
+                        //     ? context.userRole.accentColor.withOpacity(
+                        //         0.4,
+                        //       )
+                        //     : AppColors.textSecondary.withOpacity(0.3),
                         borderColor: value == index
                             ? context.userRole.accentColor.withOpacity(0.9)
                             : Colors.transparent,

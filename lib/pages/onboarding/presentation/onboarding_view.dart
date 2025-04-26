@@ -1,7 +1,14 @@
+import 'package:cades_flutter_template/common/app_enums.dart';
+import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
+import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
+import 'package:cades_flutter_template/common/utils/locator.dart';
 import 'package:cades_flutter_template/common/widgets/button/circular_icon_button.dart';
 import 'package:cades_flutter_template/common/widgets/button/custom_button.dart';
 import 'package:cades_flutter_template/pages/onboarding/domain/onboarding_cubit.dart';
 import 'package:cades_flutter_template/pages/onboarding/domain/onboarding_state.dart';
+import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/candidate_onboarding/candidate_onboarding_step_1.dart';
+import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/candidate_onboarding/candidate_onboarding_step_2.dart';
+import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/candidate_onboarding/candidate_onboarding_step_3.dart';
 import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/recruiter_onboarding/recruiter_onboarding_step_1.dart';
 import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/recruiter_onboarding/recruiter_onboarding_step_2.dart';
 import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/recruiter_onboarding/recruiter_onboarding_step_3.dart';
@@ -12,7 +19,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingView extends StatefulWidget {
-  const OnboardingView({super.key});
+  final bool allowBack;
+  const OnboardingView({this.allowBack = true, super.key});
 
   @override
   State<OnboardingView> createState() => _OnboardingViewState();
@@ -20,47 +28,19 @@ class OnboardingView extends StatefulWidget {
 
 class _OnboardingViewState extends State<OnboardingView> {
   late OnboardingCubit _onboardingCubit;
-
-  final List<String> _pageTitles = [
-    'Step1: Personal Information',
-    'Step 2: Professional Details',
-    'Step 3: Skills & Preferences',
-  ];
+  final user = getUser();
 
   @override
   void initState() {
     super.initState();
     _onboardingCubit = context.read<OnboardingCubit>();
+    _onboardingCubit.getJobFilters();
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
-  // void _nextPage() {
-  //   if (_currentPage < 2) {
-  //     _pageController.nextPage(
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else {
-  //     // Submit form and complete onboarding
-  //     _onboardingCubit.completeOnboarding();
-  //   }
-  // }
-
-  // void _previousPage() {
-  //   if (_currentPage > 0) {
-  //     _pageController.previousPage(
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else {
-  //     // Go back to previous screen
-  //     AppRoutes.appRouter.pop();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,23 +50,11 @@ class _OnboardingViewState extends State<OnboardingView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            36.verticalSpace,
-            BlocBuilder<OnboardingCubit, OnboardingState>(
-              builder: (context, state) {
-                return Text(
-                  _pageTitles[state.currentPage],
-                  style: AppTextStyles.heading3SemiBold18(
-                    color: AppColors.primary,
-                  ),
-                );
-              },
-            ),
-            24.verticalSpace,
-
+            32.verticalSpace,
             // Progress indicator
             Row(
               children: List.generate(
-                _pageTitles.length,
+                3,
                 (index) => Expanded(
                   child: BlocBuilder<OnboardingCubit, OnboardingState>(
                     builder: (context, state) {
@@ -95,7 +63,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                         height: 4.h,
                         decoration: BoxDecoration(
                           color: index <= state.currentPage
-                              ? AppColors.primary
+                              ? context.userRole.accentColor
                               : AppColors.disabledText,
                           borderRadius: BorderRadius.circular(2.r),
                         ),
@@ -112,13 +80,16 @@ class _OnboardingViewState extends State<OnboardingView> {
               child: PageView(
                 controller: _onboardingCubit.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  // CandidateOnboardingStep1(),
-                  // CandidateOnboardingStep2(),
-                  // CandidateOnboardingStep3(),
-                  RecruiterOnboardingStep1(),
-                  RecruiterOnboardingStep2(),
-                  RecruiterOnboardingStep3(),
+                children: [
+                  if (context.userRole == Role.candidate) ...[
+                    const CandidateOnboardingStep1(),
+                    const CandidateOnboardingStep2(),
+                    const CandidateOnboardingStep3(),
+                  ] else if (context.userRole == Role.recruiter) ...[
+                    const RecruiterOnboardingStep1(),
+                    const RecruiterOnboardingStep2(),
+                    const RecruiterOnboardingStep3()
+                  ],
                 ],
               ),
             ),
@@ -132,7 +103,8 @@ class _OnboardingViewState extends State<OnboardingView> {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
             child: Row(
               children: [
-                if (state.currentPage != 0) ...[
+                if (widget.allowBack && state.currentPage != 0) ...[
+                  //--------BACK-BUTTON
                   CircularIconButton(
                     icon: const Icon(
                       Icons.arrow_back_ios,
@@ -142,11 +114,16 @@ class _OnboardingViewState extends State<OnboardingView> {
                     backgroundColor:
                         AppColors.disabledText.withValues(alpha: 0.4),
                     onTap: () {
-                      _onboardingCubit.onPageChange(next: false);
+                      _onboardingCubit.onPageChange(
+                        context: context,
+                        next: false,
+                      );
                     },
                   ),
                   16.horizontalSpace,
                 ],
+
+                //---------CONTINUE-BUTTON
                 Expanded(
                   child: CustomButton(
                     width: MediaQuery.sizeOf(context).width,
@@ -156,7 +133,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     disableElevation: true,
                     // isLoading: state.onboardingStatus == ApiStatus.loading,
                     onPressed: () {
-                      _onboardingCubit.onPageChange();
+                      _onboardingCubit.onPageChange(context: context);
                     },
                     child: Text(
                       state.currentPage == 2 ? 'Complete' : 'Continue',

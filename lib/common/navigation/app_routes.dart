@@ -1,11 +1,10 @@
+import 'dart:developer';
 import 'package:cades_flutter_template/common/navigation/page_not_found.dart';
 import 'package:cades_flutter_template/common/navigation/routes.dart';
 import 'package:cades_flutter_template/di/authentication_bloc_injection.dart';
-import 'package:cades_flutter_template/di/candidate_bloc_injection.dart';
 import 'package:cades_flutter_template/di/job_listing_bloc_injection.dart';
 import 'package:cades_flutter_template/di/job_posting_bloc_injection.dart';
 import 'package:cades_flutter_template/di/onboarding_bloc_injection.dart';
-import 'package:cades_flutter_template/di/recruiter_bloc_injection.dart';
 import 'package:cades_flutter_template/di/recruiter_dashboard_bloc_injection.dart';
 import 'package:cades_flutter_template/pages/authentication/presentation/sign_up_view.dart';
 import 'package:cades_flutter_template/pages/authentication/presentation/signin_view.dart';
@@ -56,28 +55,61 @@ class AppRoutes {
           );
         },
       ),
-      ShellRoute(
-        navigatorKey: shellRouterKey,
-        routes: [
-          GoRoute(
-            path: Routes.candidateOnboarding,
-            builder: (context, state) {
-              return const CandidateBlocInjection();
-            },
-          ),
-          GoRoute(
-            path: Routes.recruiterOnboarding,
-            builder: (context, state) {
-              return const RecruiterBlocInjection();
-            },
-          ),
-        ],
-        builder: (context, state, child) {
+      GoRoute(
+        path: Routes.candidateOnboarding,
+        builder: (context, state) {
+          final bool? allowBack = state.extra as bool?;
+          log('allow back- $allowBack');
           return OnboardingBlocInjection(
-            child: child,
+            allowBack: allowBack,
           );
         },
       ),
+      GoRoute(
+        path: Routes.recruiterOnboarding,
+        builder: (context, state) {
+          final bool? allowBack = state.extra as bool?;
+          log('allow back- $allowBack');
+          return OnboardingBlocInjection(
+            allowBack: allowBack,
+          );
+        },
+      ),
+      // ShellRoute(
+      //   navigatorKey: shellRouterKey,
+      //   routes: [
+      //     GoRoute(
+      //       path: Routes.candidateOnboarding,
+      //       // builder: (context, state) {
+      //       //   return const CandidateBlocInjection();
+      //       // },
+      //       builder: (context, state) {
+      //         final bool? allowBack = state.extra as bool?;
+      //         return OnboardingBlocInjection(
+      //           child: OnboardingBlocInjection(
+      //             allowBack: allowBack,
+      //             // child: child,
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //     GoRoute(
+      //       path: Routes.recruiterOnboarding,
+      //       builder: (context, state) {
+      //         return const RecruiterBlocInjection();
+      //       },
+      //     ),
+      //   ],
+      //   builder: (context, state, child) {
+      //     final bool? allowBack = state.extra as bool?;
+      //     return OnboardingBlocInjection(
+      //       child: OnboardingBlocInjection(
+      //         allowBack: allowBack,
+      //         child: child,
+      //       ),
+      //     );
+      //   },
+      // ),
       GoRoute(
         path: Routes.dashboard,
         builder: (context, state) {

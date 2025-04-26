@@ -32,3 +32,21 @@ const List<Map<String, String>> adminFilterOptions = [
     'icon': 'business_center',
   },
 ];
+
+const List<String> jobDomains = [
+  'Software Development',
+  'Quality Assurance/QA',
+  'Managerial',
+  'UI/UX Designer',
+  'Marketing',
+  'Data Analyst',
+  'Sales',
+  'Customer Support',
+];
+
+// List<ExperienceLevel> experienceLevels = [
+//   ExperienceLevel(
+//     name: 'Entry Level',
+//     yearsFrom:
+//   ),
+// ];

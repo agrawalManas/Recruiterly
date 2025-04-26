@@ -1,4 +1,5 @@
 import 'package:cades_flutter_template/common/models/user_model.dart';
+import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
 import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
 import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
 import 'package:cades_flutter_template/common/utils/locator.dart';
@@ -49,6 +50,8 @@ class CustomTextfieldWithLabel extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.onTap,
     this.contentPadding,
+    this.prefixText,
+    this.prefixWidget,
     super.key,
   });
 
@@ -91,6 +94,8 @@ class CustomTextfieldWithLabel extends StatefulWidget {
   final TextAlign textAlign;
   final TextCapitalization textCapitalization;
   final EdgeInsets? contentPadding;
+  final String? prefixText;
+  final Widget? prefixWidget;
 
   @override
   State<CustomTextfieldWithLabel> createState() =>
@@ -161,6 +166,7 @@ class _CustomTextfieldWithLabelState extends State<CustomTextfieldWithLabel> {
                 _focusNode.unfocus();
               },
               obscureText: value,
+              cursorColor: context.userRole.accentColor,
               textAlign: widget.textAlign,
               maxLines: widget.maxLines,
               minLines: widget.minLines,
@@ -178,6 +184,8 @@ class _CustomTextfieldWithLabelState extends State<CustomTextfieldWithLabel> {
               onSaved: widget.onSaved,
               textCapitalization: widget.textCapitalization,
               decoration: InputDecoration(
+                prefix: widget.prefixWidget,
+                prefixText: widget.prefixText,
                 prefixIcon: (widget.prefixIcon == null)
                     ? widget.isPasswordFiled
                         ? value

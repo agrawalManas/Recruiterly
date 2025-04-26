@@ -49,10 +49,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   () {
                     AppRoutes.appRouter.pop();
                   },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back_ios,
                 size: 22,
-                color: AppColors.background,
+                color: leadingColor ?? AppColors.background,
               ),
             )
           : const SizedBox.shrink(),

@@ -11,6 +11,8 @@ class CustomDatePickerWithLabel extends StatelessWidget {
   final Color? fillColor;
   final bool isRequired;
   final DateTime? initialValue;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
   final void Function(DateTime? value)? onChanged;
   CustomDatePickerWithLabel({
     required this.label,
@@ -18,6 +20,8 @@ class CustomDatePickerWithLabel extends StatelessWidget {
     this.fillColor = AppColors.background,
     this.onChanged,
     this.initialValue,
+    this.firstDate,
+    this.lastDate,
     super.key,
   }) : _dateNotifier = ValueNotifier<DateTime?>(initialValue);
 
@@ -51,8 +55,9 @@ class CustomDatePickerWithLabel extends StatelessWidget {
           onTap: () async {
             final selectedDate = await Utils.openDatePicker(
               context: context,
-              firstDate: DateTime.now(),
-              lastDate: DateTime(DateTime.now().year + 1),
+              firstDate: firstDate ?? DateTime.now(),
+              lastDate: lastDate ?? DateTime(DateTime.now().year + 1),
+              initialDate: initialValue,
             );
             if (selectedDate != null) {
               _dateNotifier.value = selectedDate;
