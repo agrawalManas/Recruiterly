@@ -1,3 +1,4 @@
+import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -63,5 +64,13 @@ class Utils {
         return child;
       },
     );
+  }
+
+  static String getExperienceYearsFromTo(
+    ExperienceLevel? experience, [
+    String separator = 'years to ',
+    String suffix = 'years',
+  ]) {
+    return '${experience?.yearsFrom ?? 0} $separator ${experience?.yearsTo ?? 0} $suffix';
   }
 }

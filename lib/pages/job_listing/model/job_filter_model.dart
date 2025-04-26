@@ -5,7 +5,7 @@ import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
 
 class JobFilterModel {
   final List<Filter?>? jobRoles;
-  // final List<Filter?>? industries;
+  final List<dynamic>? domains;
   final List<ExperienceLevel?>? experienceLevels;
   final List<Skill?>? skills;
   final List<Location?>? locations;
@@ -18,7 +18,7 @@ class JobFilterModel {
 
   JobFilterModel({
     this.jobRoles,
-    // this.industries,
+    this.domains,
     this.experienceLevels,
     this.skills,
     this.locations,
@@ -32,6 +32,7 @@ class JobFilterModel {
 
   factory JobFilterModel.fromMap(Map<String, dynamic> map) {
     return JobFilterModel(
+      domains: map['domains'] as List<dynamic>?,
       employmentType: map['employmentType'],
       jobRoles: (map['jobRoles'] as List?)
               ?.map((role) => Filter.fromMap(role))
@@ -68,6 +69,7 @@ class JobFilterModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'domains': domains,
       'jobRoles': jobRoles?.map((role) => role?.toMap()).toList(),
       // 'industries': jobRoles?.map((industry) => industry?.toMap()).toList(),
       'experienceLevels':
@@ -85,6 +87,7 @@ class JobFilterModel {
 
   JobFilterModel copyWith({
     List<Filter?>? jobRoles,
+    List<String>? domains,
     List<ExperienceLevel?>? experienceLevels,
     List<Skill?>? skills,
     List<Location?>? locations,
@@ -96,6 +99,7 @@ class JobFilterModel {
     String? id,
   }) {
     return JobFilterModel(
+      domains: domains ?? this.domains,
       jobRoles: jobRoles ?? this.jobRoles,
       experienceLevels: experienceLevels ?? this.experienceLevels,
       skills: skills ?? this.skills,

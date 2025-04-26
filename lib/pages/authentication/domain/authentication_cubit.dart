@@ -3,9 +3,12 @@ import 'package:cades_flutter_template/common/app_enums.dart';
 import 'package:cades_flutter_template/common/models/user_model.dart';
 import 'package:cades_flutter_template/common/navigation/app_routes.dart';
 import 'package:cades_flutter_template/common/navigation/routes.dart';
+import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
 import 'package:cades_flutter_template/common/utils/locator.dart';
 import 'package:cades_flutter_template/common/utils/utils.dart';
 import 'package:cades_flutter_template/pages/authentication/domain/authentication_state.dart';
+import 'package:cades_flutter_template/pages/onboarding/models/candidate_profile_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,13 +16,34 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit() : super(const AuthenticationState.init());
 
   final FirebaseAuth _firebaseAuth = dependencyLocator<FirebaseAuth>();
+  final FirebaseFirestore _firestore = dependencyLocator<FirebaseFirestore>();
 
   void checkAuthStatus() {
     Future.delayed((const Duration(seconds: 2)), () async {
       final currentUser = _firebaseAuth.currentUser;
       if (currentUser != null) {
         await _fetchUserDetails(id: currentUser.uid);
-        AppRoutes.appRouter.pushReplacement(Routes.dashboard);
+        final user = getUser();
+
+        /// if user has completed onboarding
+        /// take them to dashboard
+        /// otherwise onboarding
+        if (user.onboardingStep == 3) {
+          AppRoutes.appRouter.pushReplacement(Routes.dashboard);
+        } else {
+          if (user.role?.userRole == Role.candidate) {
+            //disable back button
+            AppRoutes.appRouter.pushReplacement(
+              Routes.candidateOnboarding,
+              extra: false,
+            );
+          } else if (user.role?.userRole == Role.recruiter) {
+            AppRoutes.appRouter.pushReplacement(
+              Routes.recruiterOnboarding,
+              extra: false,
+            );
+          }
+        }
       } else {
         AppRoutes.appRouter.pushReplacement(Routes.signin);
       }
@@ -137,7 +161,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
             onboardingStep: 0,
           ),
         ).then((value) async {
-          await signIn(email: email, password: password);
+          await signIn(
+            email: email,
+            password: password,
+            isFromSignup: true,
+          );
         });
       },
     );
@@ -151,12 +179,28 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       await userDetailDocumentRef(user.uid).set(
         userModel.toJson(),
       );
+      if (userModel.role?.userRole == Role.candidate) {
+        await _firestore.collection('candidates').doc(user.uid).set(
+              CandidateProfileModel(
+                userId: user.uid,
+                createdAt: DateTime.now(),
+              ).toJson(),
+            );
+        log('Created candidate profile!');
+      } else if (userModel.role?.userRole == Role.recruiter) {
+        //TODO: add recruiter collection
+        log('Created recruiter profile!');
+      }
       Utils.showToast(message: 'Account created successfully!');
     }
   }
 
   //-----Sign In with email & password with validations
-  Future signIn({required String email, required String password}) async {
+  Future signIn({
+    required String email,
+    required String password,
+    bool isFromSignup = false,
+  }) async {
     if (_validateEmail(email) && password.isNotEmpty) {
       try {
         emit(state.copyWith(signinApiStatus: ApiStatus.loading));
@@ -167,12 +211,22 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         )
             .then(
           (value) async {
-            await _fetchUserDetails(id: value.user?.uid);
+            // await _fetchUserDetails(id: value.user?.uid);
+            checkAuthStatus();
           },
         );
         // final user = dependencyLocator<UserModel>();
-        emit(state.copyWith(signinApiStatus: ApiStatus.success));
-        AppRoutes.appRouter.pushReplacement(Routes.dashboard);
+        // emit(state.copyWith(signinApiStatus: ApiStatus.success));
+        // final user = getUser();
+        // if (isFromSignup) {
+        //   if (user.role?.userRole == Role.candidate) {
+        //     AppRoutes.appRouter.pushReplacement(Routes.candidateOnboarding);
+        //   } else if (user.role?.userRole == Role.recruiter) {
+        //     AppRoutes.appRouter.pushReplacement(Routes.recruiterOnboarding);
+        //   }
+        // } else {
+        //   AppRoutes.appRouter.pushReplacement(Routes.dashboard);
+        // }
       } catch (error) {
         emit(state.copyWith(signinApiStatus: ApiStatus.failure));
         log('Error while Sign In- ${error.toString()}');

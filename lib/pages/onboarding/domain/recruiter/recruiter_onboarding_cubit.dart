@@ -1,9 +1,9 @@
-import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_state.dart';
+import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RecruiterCubit extends Cubit<RecruiterState> {
-  RecruiterCubit() : super(const RecruiterState.init());
+class RecruiterOnboardingCubit extends Cubit<RecruiterOnboardingState> {
+  RecruiterOnboardingCubit() : super(const RecruiterOnboardingState.init());
 
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
