@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-.husky/scripts/branch-name-check.sh $1 $2
+.husky/scripts/branch-name-check.sh
