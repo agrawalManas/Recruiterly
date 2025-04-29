@@ -8,6 +8,7 @@ import 'package:cades_flutter_template/common/utils/utils.dart';
 import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
 import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
 import 'package:cades_flutter_template/pages/onboarding/domain/onboarding_state.dart';
+import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -111,7 +112,24 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         }
         emit(state.copyWith(continueOnboardingApiStatus: ApiStatus.success));
         return result;
-      } else if (user.role?.userRole == Role.recruiter) {}
+      } else if (user.role?.userRole == Role.recruiter) {
+        final recruiterCubit = context.read<RecruiterOnboardingCubit>();
+        switch (page) {
+          case 0:
+            result = await recruiterCubit.continueOnboardingStep1();
+            break;
+          case 1:
+            result = await recruiterCubit.continueOnboardingStep2();
+            break;
+          case 2:
+            result = await recruiterCubit.continueOnboardingStep3();
+            break;
+          default:
+            break;
+        }
+        emit(state.copyWith(continueOnboardingApiStatus: ApiStatus.success));
+        return result;
+      }
     } catch (error) {
       log('Error in step $page validation: ${error.toString()}');
       Utils.showToast(message: 'Failed to update details at the moment!');

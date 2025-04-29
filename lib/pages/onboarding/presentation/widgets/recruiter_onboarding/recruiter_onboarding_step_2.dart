@@ -1,7 +1,10 @@
+import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
+import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
+import 'package:cades_flutter_template/common/widgets/chip/chip_selector.dart';
 import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
 import 'package:cades_flutter_template/pages/onboarding/domain/onboarding_cubit.dart';
 import 'package:cades_flutter_template/pages/onboarding/domain/onboarding_state.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
+import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
 import 'package:cades_flutter_template/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,30 +20,12 @@ class RecruiterOnboardingStep2 extends StatefulWidget {
 }
 
 class _CompanyDetailsPageState extends State<RecruiterOnboardingStep2> {
-  final TextEditingController _websiteController = TextEditingController();
-
-  final List<String> _industries = [
-    'Technology',
-    'Healthcare',
-    'Finance',
-    'Education',
-    'Manufacturing',
-    'Retail',
-    'Entertainment',
-    'Transportation',
-    'Construction',
-    'Hospitality',
-    'Real Estate',
-    'Agriculture',
-    'Energy',
-    'Media',
-    'Telecommunications',
-  ];
+  late RecruiterOnboardingCubit _recruiterOnboardingCubit;
 
   @override
-  void dispose() {
-    _websiteController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _recruiterOnboardingCubit = context.read<RecruiterOnboardingCubit>();
   }
 
   @override
@@ -52,56 +37,75 @@ class _CompanyDetailsPageState extends State<RecruiterOnboardingStep2> {
         children: [
           Text(
             "Tell us more about your company",
-            style: AppTextStyles.body2Regular16(),
+            style: AppTextStyles.body2SemiBold16(
+              color: context.userRole.accentColor,
+            ),
           ),
           24.verticalSpace,
 
-          // Industry
+          //----------Industry
           Text(
-            "Industry",
-            style: AppTextStyles.body2SemiBold16(),
+            "Industry(ies) that best describes you",
+            style: AppTextStyles.body3SemiBold14(),
           ),
           12.verticalSpace,
           BlocBuilder<OnboardingCubit, OnboardingState>(
             builder: (context, state) {
-              return Wrap(
-                spacing: 8.w,
-                runSpacing: 8.h,
-                children: _industries.map((industry) {
-                  return ChoiceChip(
-                    label: Text(industry),
-                    selected: false,
-                    onSelected: (selected) {
-                      // if (selected) {
-                      //   widget.recruiterOnboardingCubit
-                      //       .updateIndustry(industry);
-                      // }
-                    },
-                    backgroundColor: AppColors.surface,
-                    selectedColor: AppColors.primary.withOpacity(0.2),
-                    labelStyle: AppTextStyles.body3Medium14(
-                        // color: state.industry == industry
-                        //     ? AppColors.primary
-                        //     : AppColors.textPrimary,
-                        ),
+              final recruiterOnboardingState = _recruiterOnboardingCubit.state;
+              return ChipSelector<String>(
+                initiallySelectedOptions:
+                    recruiterOnboardingState.industries ?? [],
+                isMultiSelect: true,
+                options: (state.filters?.industries ?? []).cast<String>(),
+                getText: (value) {
+                  return value;
+                },
+                onSelectOption: (value) {
+                  _recruiterOnboardingCubit.onSelectIndustries(
+                    value,
                   );
-                }).toList(),
+                },
               );
             },
           ),
           24.verticalSpace,
 
-          // Website (Optional)
+          //----------Company-size
+          Text(
+            "Company Size",
+            style: AppTextStyles.body3SemiBold14(),
+          ),
+          12.verticalSpace,
+          BlocBuilder<OnboardingCubit, OnboardingState>(
+            builder: (context, state) {
+              final recruiterOnboardingState = _recruiterOnboardingCubit.state;
+              return ChipSelector<dynamic>(
+                initiallySelectedOptions: [
+                  recruiterOnboardingState.companySize
+                ],
+                isMultiSelect: false,
+                options: state.filters?.companySize ?? [],
+                getText: (value) {
+                  return '${value.toString()} employees';
+                },
+                onSelectOption: (value) {
+                  _recruiterOnboardingCubit.onSelectCompanySize(
+                    value.first,
+                  );
+                },
+              );
+            },
+          ),
+          24.verticalSpace,
+
+          //----------Website(Optional)
           CustomTextfieldWithLabel(
             isRequired: false,
             labelText: 'Company Website (Optional)',
-            hintText: 'https://www.example.com',
-            controller: _websiteController,
+            hintText: 'eg. https://www.google.com',
+            controller: _recruiterOnboardingCubit.companyWebsiteController,
             textInputType: TextInputType.url,
             textInputAction: TextInputAction.done,
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateWebsite(value);
-            // },
           ),
           40.verticalSpace,
         ],

@@ -6,6 +6,8 @@ import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
 class JobFilterModel {
   final List<Filter?>? jobRoles;
   final List<dynamic>? domains;
+  final List<dynamic>? industries;
+  final List<dynamic>? companySize;
   final List<ExperienceLevel?>? experienceLevels;
   final List<Skill?>? skills;
   final List<Location?>? locations;
@@ -19,6 +21,8 @@ class JobFilterModel {
   JobFilterModel({
     this.jobRoles,
     this.domains,
+    this.industries,
+    this.companySize,
     this.experienceLevels,
     this.skills,
     this.locations,
@@ -34,14 +38,12 @@ class JobFilterModel {
     return JobFilterModel(
       domains: map['domains'] as List<dynamic>?,
       employmentType: map['employmentType'],
+      companySize: map['companySize'] as List<dynamic>?,
       jobRoles: (map['jobRoles'] as List?)
               ?.map((role) => Filter.fromMap(role))
               .toList() ??
           [],
-      // industries: (map['industries'] as List?)
-      //         ?.map((role) => Filter.fromMap(role))
-      //         .toList() ??
-      //     [],
+      industries: map['industries'] as List<dynamic>?,
       experienceLevels: (map['experienceLevels'] as List?)
               ?.map((level) => ExperienceLevel.fromMap(level))
               .toList() ??
@@ -71,7 +73,8 @@ class JobFilterModel {
     return {
       'domains': domains,
       'jobRoles': jobRoles?.map((role) => role?.toMap()).toList(),
-      // 'industries': jobRoles?.map((industry) => industry?.toMap()).toList(),
+      'industries': industries,
+      'companySize': companySize,
       'experienceLevels':
           experienceLevels?.map((level) => level?.toMap()).toList(),
       'skills': skills?.map((skill) => skill?.toMap()).toList(),
@@ -89,6 +92,8 @@ class JobFilterModel {
     List<Filter?>? jobRoles,
     List<String>? domains,
     List<ExperienceLevel?>? experienceLevels,
+    List<dynamic>? companySize,
+    List<dynamic>? industries,
     List<Skill?>? skills,
     List<Location?>? locations,
     String? lastUpdatedBy,
@@ -109,6 +114,8 @@ class JobFilterModel {
       salaryRange: salaryRange ?? this.salaryRange,
       employmentType: employmentType ?? this.employmentType,
       remote: remote ?? this.remote,
+      companySize: companySize ?? companySize,
+      industries: industries ?? industries,
       id: id ?? this.id,
     );
   }

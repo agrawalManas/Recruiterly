@@ -48,7 +48,7 @@ class _CandidateOnboardingStep3State extends State<CandidateOnboardingStep3> {
         children: [
           Text(
             "Select your skills and preferences",
-            style: AppTextStyles.body2Medium16(
+            style: AppTextStyles.body2SemiBold16(
               color: context.userRole.accentColor,
             ),
           ),

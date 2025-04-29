@@ -1,6 +1,10 @@
 import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
+import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
+import 'package:cades_flutter_template/styles/app_colors.dart';
 import 'package:cades_flutter_template/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RecruiterOnboardingStep3 extends StatefulWidget {
@@ -14,22 +18,12 @@ class RecruiterOnboardingStep3 extends StatefulWidget {
 }
 
 class _RecruiterOnboardingStep3State extends State<RecruiterOnboardingStep3> {
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _streetController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _stateController = TextEditingController();
-  final TextEditingController _countryController = TextEditingController();
-  final TextEditingController _postalCodeController = TextEditingController();
+  late RecruiterOnboardingCubit _recruiterOnboardingCubit;
 
   @override
-  void dispose() {
-    _phoneController.dispose();
-    _streetController.dispose();
-    _cityController.dispose();
-    _stateController.dispose();
-    _countryController.dispose();
-    _postalCodeController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _recruiterOnboardingCubit = context.read<RecruiterOnboardingCubit>();
   }
 
   @override
@@ -40,97 +34,113 @@ class _RecruiterOnboardingStep3State extends State<RecruiterOnboardingStep3> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Enter contact details",
+            "Provide your contact details",
             style: AppTextStyles.body2Regular16(),
           ),
           24.verticalSpace,
-
-          // Phone Number
+          //----------Registered-Phone-Number
           CustomTextfieldWithLabel(
             isRequired: true,
-            labelText: 'Contact Phone',
-            controller: _phoneController,
-            textInputType: TextInputType.phone,
+            labelText: 'Contact Number',
+            hintText: 'Type here...',
+            controller:
+                _recruiterOnboardingCubit.registeredPhoneNumberController,
+            textInputType: TextInputType.number,
             textInputAction: TextInputAction.next,
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateContactPhone(value);
-            // },
+            prefixIcon: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '+91',
+                  style: AppTextStyles.body3Medium14(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(10),
+              FilteringTextInputFormatter.digitsOnly,
+            ],
           ),
           24.verticalSpace,
 
-          // Address
+          //--------Address
           Text(
             "Company Address",
-            // style: AppTextStyles.body2SemiBold16(),
+            style: AppTextStyles.body3Medium14(),
           ),
           16.verticalSpace,
 
-          // Street
+          //----Line 1
           CustomTextfieldWithLabel(
             isRequired: true,
-            labelText: 'Street',
-            controller: _streetController,
+            labelText: 'Address Line 1',
+            controller: _recruiterOnboardingCubit.addressLine1Controller,
             textInputAction: TextInputAction.next,
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateStreet(value);
-            // },
+            textInputType: TextInputType.streetAddress,
+            hintText: 'Type here...',
           ),
           16.verticalSpace,
 
-          // City
+          //-----Line 2
+          CustomTextfieldWithLabel(
+            isRequired: false,
+            labelText: 'Address Line 2',
+            controller: _recruiterOnboardingCubit.addressLine2Controller,
+            textInputAction: TextInputAction.next,
+            textInputType: TextInputType.streetAddress,
+            hintText: 'Type here...',
+          ),
+          16.verticalSpace,
+
+          //-----City
           CustomTextfieldWithLabel(
             isRequired: true,
             labelText: 'City',
-            controller: _cityController,
+            controller: _recruiterOnboardingCubit.cityController,
             textInputAction: TextInputAction.next,
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateCity(value);
-            // },
+            textInputType: TextInputType.streetAddress,
+            hintText: 'eg. Gurugram',
           ),
           16.verticalSpace,
 
-          // Row for State and Postal Code
           Row(
             children: [
-              // State
+              //------State
               Expanded(
                 child: CustomTextfieldWithLabel(
                   isRequired: true,
                   labelText: 'State/Province',
-                  controller: _stateController,
+                  controller: _recruiterOnboardingCubit.stateController,
                   textInputAction: TextInputAction.next,
-                  // onChanged: (value) {
-                  //   widget.recruiterOnboardingCubit.updateState(value);
-                  // },
+                  hintText: 'eg. Haryana',
                 ),
               ),
               16.horizontalSpace,
-              // Postal Code
+
+              //-------Postal Code
               Expanded(
                 child: CustomTextfieldWithLabel(
                   isRequired: true,
                   labelText: 'Postal Code',
-                  controller: _postalCodeController,
+                  controller: _recruiterOnboardingCubit.pinCodeController,
                   textInputType: TextInputType.number,
                   textInputAction: TextInputAction.next,
-                  // onChanged: (value) {
-                  //   widget.recruiterOnboardingCubit.updatePostalCode(value);
-                  // },
+                  hintText: 'eg. 122018',
                 ),
               ),
             ],
           ),
           16.verticalSpace,
 
-          // Country
+          //-------Country
           CustomTextfieldWithLabel(
             isRequired: true,
             labelText: 'Country',
-            controller: _countryController,
+            readOnly: true,
+            controller: _recruiterOnboardingCubit.countryController,
             textInputAction: TextInputAction.done,
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateCountry(value);
-            // },
           ),
           40.verticalSpace,
         ],

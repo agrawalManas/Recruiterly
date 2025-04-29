@@ -1,101 +1,79 @@
-import 'dart:developer';
+import 'package:cades_flutter_template/common/app_enums.dart';
+import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
 import 'package:cades_flutter_template/common/utils/locator.dart';
 import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_state.dart';
-import 'package:cades_flutter_template/pages/onboarding/models/candidate_profile_model.dart';
+import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_state.dart';
+import 'package:cades_flutter_template/pages/onboarding/models/recruiter_profile_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RecruiterOnboardingCubit extends Cubit<CandidateOnboardingState> {
-  RecruiterOnboardingCubit() : super(CandidateOnboardingState.init());
+class RecruiterOnboardingCubit extends Cubit<RecruiterOnboardingState> {
+  RecruiterOnboardingCubit() : super(const RecruiterOnboardingState.init());
 
   final _firestore = dependencyLocator<FirebaseFirestore>();
 
   //-------step-1-controllers
-  final TextEditingController _nameController = TextEditingController(
-    text: getUser().name ?? '',
-  );
-  final TextEditingController _designationController = TextEditingController();
-  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _companyDescriptionController =
+      TextEditingController();
+  final TextEditingController _companyFoundedYearController =
+      TextEditingController();
 
   //--------step-2-controllers
-  final TextEditingController _summaryController = TextEditingController();
-  final List<String> _candidatePreferredDomains = [];
+  final TextEditingController _companyWebsiteController =
+      TextEditingController();
+  final TextEditingController _registeredPhoneNumberController =
+      TextEditingController();
 
   //---------step-3-controllers
-  final TextEditingController _minSalaryController = TextEditingController();
-  final TextEditingController _maxSalaryController = TextEditingController();
-  final List<String> _candidatePreferredEmploymentTypes = [];
+  final TextEditingController _addressLine1Controller = TextEditingController();
+  final TextEditingController _addressLine2Controller = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _stateController = TextEditingController();
+  final TextEditingController _pinCodeController = TextEditingController();
+  final TextEditingController _countryController =
+      TextEditingController(text: 'India');
 
   //-------getters
-  TextEditingController get nameController => _nameController;
-  TextEditingController get designationController => _designationController;
-  TextEditingController get numberController => _numberController;
-  TextEditingController get summaryController => _summaryController;
-  TextEditingController get minSalaryController => _minSalaryController;
-  TextEditingController get maxSalaryController => _maxSalaryController;
+  TextEditingController get companyNameController => _companyNameController;
+  TextEditingController get companyDescriptionController =>
+      _companyDescriptionController;
+  TextEditingController get companyFoundedYearController =>
+      _companyFoundedYearController;
+  TextEditingController get companyWebsiteController =>
+      _companyWebsiteController;
+  TextEditingController get registeredPhoneNumberController =>
+      _registeredPhoneNumberController;
+  TextEditingController get addressLine1Controller => _addressLine1Controller;
+  TextEditingController get addressLine2Controller => _addressLine2Controller;
+  TextEditingController get cityController => _cityController;
+  TextEditingController get stateController => _stateController;
+  TextEditingController get pinCodeController => _pinCodeController;
+  TextEditingController get countryController => _countryController;
 
-  void onChangeDOB(DateTime? date) {
-    emit(state.copyWith(candidateDOB: date));
+  void onSelectCompanySize(String value) {
+    emit(state.copyWith(companySize: value));
   }
 
-  void onSelectCandidateExperienceLevel(ExperienceLevel? value) {
-    log('experience level- $value');
-    emit(state.copyWith(candidateExperienceLevel: value));
-  }
-
-  void onSelectCandidatePreferredDomains(List<dynamic> value) {
-    value.forEach((element) {
-      _candidatePreferredDomains.add(element.toString());
-    });
-    emit(state.copyWith(candidatePreferredDomains: _candidatePreferredDomains));
-    log('preferred domains- $_candidatePreferredDomains');
-  }
-
-  void onSelectCandidatePreferredEmploymentType(List<dynamic> value) {
-    value.forEach((element) {
-      _candidatePreferredEmploymentTypes.add(element.toString());
-    });
-    emit(state.copyWith(
-      candidatePreferredEmploymentTypes: _candidatePreferredEmploymentTypes,
-    ));
-    log('preferred employment types- $_candidatePreferredEmploymentTypes');
-  }
-
-  void onSelectCandidatePreferredLocations(List<Location?> locations) {
-    emit(state.copyWith(preferredLocations: locations));
-  }
-
-  void onSelectCandidateSkills(Skill? skill) {
-    if ((state.candidateSkills ?? []).contains(skill)) {
-      Utils.showToast(message: 'Skill already added, try another one!');
-      return;
-    }
-    final updatedSkills = List<Skill?>.from(state.candidateSkills ?? [])
-      ..add(skill);
-    emit(state.copyWith(candidateSkills: updatedSkills));
-  }
-
-  void onRemoveSelectedSkill(int index) {
-    final updatedSkills = List<Skill>.from(state.candidateSkills ?? []);
-    updatedSkills.removeAt(index);
-    emit(state.copyWith(candidateSkills: updatedSkills));
+  void onSelectIndustries(List<String> selectedIndustries) {
+    emit(state.copyWith(industries: selectedIndustries));
   }
 
   Future<bool> continueOnboardingStep1() async {
-    if (_nameController.text.isNotEmpty &&
-        _designationController.text.isNotEmpty &&
-        _numberController.text.isNotEmpty) {
+    if (_companyNameController.text.isNotEmpty &&
+        _companyDescriptionController.text.isNotEmpty &&
+        (_companyFoundedYearController.text.isNotEmpty &&
+            DateTime.now().year >=
+                int.parse(_companyFoundedYearController.text.trim()))) {
       await _updateOnboardingDetails(
-        data: CandidateProfileModel(
-          fullName: _nameController.text.trim(),
-          phoneNumber: _numberController.text.trim(),
-          currentDesignation: _designationController.text.trim(),
-          updatedAt: DateTime.now(),
-        ).toJson(),
+        data: {
+          'companyName': _companyNameController.text.trim(),
+          'yearFounded': int.parse(_companyFoundedYearController.text.trim()),
+          'companyDescription': _companyDescriptionController.text.trim(),
+          'updatedAt': DateTime.now(),
+          'createdAt': DateTime.now(),
+        },
         step: 1,
       );
       return true;
@@ -105,16 +83,15 @@ class RecruiterOnboardingCubit extends Cubit<CandidateOnboardingState> {
   }
 
   Future<bool> continueOnboardingStep2() async {
-    if (_summaryController.text.isNotEmpty &&
-        state.candidateExperienceLevel != null &&
-        (state.candidatePreferredDomains ?? []).isNotEmpty) {
+    if ((state.companySize ?? '').isNotEmpty &&
+        (state.industries ?? []).isNotEmpty) {
       await _updateOnboardingDetails(
-        data: CandidateProfileModel(
-          experienceLevel: state.candidateExperienceLevel,
-          preferredDomains: state.candidatePreferredDomains,
-          summary: _summaryController.text.trim(),
-          updatedAt: DateTime.now(),
-        ).toJson(),
+        data: {
+          'website': _companyWebsiteController.text.trim(),
+          'industries': state.industries,
+          'companySize': state.companySize,
+          'updatedAt': DateTime.now(),
+        },
         step: 2,
       );
       return true;
@@ -124,22 +101,24 @@ class RecruiterOnboardingCubit extends Cubit<CandidateOnboardingState> {
   }
 
   Future<bool> continueOnboardingStep3() async {
-    if (_minSalaryController.text.isNotEmpty &&
-        _maxSalaryController.text.isNotEmpty &&
-        (state.candidateSkills ?? []).isNotEmpty &&
-        (state.candidatePreferredEmploymentTypes ?? []).isNotEmpty &&
-        (state.preferredLocations ?? []).isNotEmpty) {
+    if (_registeredPhoneNumberController.text.trim().isNotEmpty &&
+        _addressLine1Controller.text.trim().isNotEmpty &&
+        _cityController.text.trim().isNotEmpty &&
+        _stateController.text.trim().isNotEmpty &&
+        _pinCodeController.text.trim().isNotEmpty) {
       await _updateOnboardingDetails(
-        data: CandidateProfileModel(
-          experienceLevel: state.candidateExperienceLevel,
-          preferredLocations: state.preferredLocations,
-          skills: state.candidateSkills,
-          expectedSalary: SalaryRange(
-            min: num.parse(_minSalaryController.text.trim()),
-            max: num.parse(_maxSalaryController.text.trim()),
-          ),
-          updatedAt: DateTime.now(),
-        ).toJson(),
+        data: {
+          'contactNumber': _registeredPhoneNumberController.text.trim(),
+          'address': Address(
+            city: _cityController.text.trim(),
+            state: _stateController.text.trim(),
+            country: _countryController.text.trim(),
+            postalCode: _pinCodeController.text.trim(),
+            addressLine1: _addressLine1Controller.text.trim(),
+            addressLine2: _addressLine2Controller.text.trim(),
+          ).toJson(),
+          'updatedAt': DateTime.now(),
+        },
         step: 3,
       );
       return true;
@@ -148,14 +127,19 @@ class RecruiterOnboardingCubit extends Cubit<CandidateOnboardingState> {
     return false;
   }
 
-  /// update the candidate profile collection
+  /// update the candidates/recruitersHea collection
   /// corresponds to his profile
   Future<void> _updateOnboardingDetails({
     required Map<String, dynamic> data,
     required int step,
   }) async {
-    final userRef = userDetailDocumentRef(getUser().uid ?? '');
-    await _firestore.collection('candidates').doc(getUser().uid).update(data);
+    final user = getUser();
+    final userRef = userDetailDocumentRef(user.uid ?? '');
+    if (user.role?.userRole == Role.candidate) {
+      await _firestore.collection('candidates').doc(user.uid).update(data);
+    } else if (user.role?.userRole == Role.recruiter) {
+      await _firestore.collection('recruiters').doc(user.uid).update(data);
+    }
     await userRef.update({
       'onboardingStep': step,
     });
