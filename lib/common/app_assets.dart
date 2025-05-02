@@ -1,3 +1,3 @@
 class AppAssets {
-  static const logo = 'assets/logo.png';
+  static const logo = 'assets/talentmesh_logo.jpg';
 }

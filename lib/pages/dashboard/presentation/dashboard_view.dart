@@ -173,7 +173,7 @@ class _DashboardViewState extends State<DashboardView> {
                   onPressed: () {
                     if (context.userRole == Role.candidate) {
                       AppRoutes.appRouter.push(Routes.jobListing);
-                    } else {
+                    } else if (context.userRole == Role.recruiter) {
                       AppRoutes.appRouter.push(Routes.jobPost);
                     }
                   },

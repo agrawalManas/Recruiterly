@@ -35,7 +35,9 @@ class DashboardCubit extends Cubit<DashboardState> {
           role: 'none',
         ),
       );
-      dependencyLocator.unregister<List<ApplicationModel>>();
+      if (dependencyLocator.isRegistered<List<ApplicationModel>>()) {
+        dependencyLocator.unregister<List<ApplicationModel>>();
+      }
       AppRoutes.appRouter.pushReplacement(Routes.signin);
     } catch (error) {
       log('Error while signing out- ${error.toString()}');
@@ -134,10 +136,10 @@ class DashboardCubit extends Cubit<DashboardState> {
         }
         if (dependencyLocator.isRegistered<List<ApplicationModel>>()) {
           dependencyLocator.unregister<List<ApplicationModel>>();
-          dependencyLocator.registerSingleton<List<ApplicationModel>>(
-            appliedJobs,
-          );
         }
+        dependencyLocator.registerSingleton<List<ApplicationModel>>(
+          appliedJobs,
+        );
         emit(
           state.copyWith(
             getAppliedJobsApiStatus: ApiStatus.success,
