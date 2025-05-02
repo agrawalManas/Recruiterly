@@ -4,9 +4,11 @@ class RecruiterProfileModel {
   final String? userId;
   final String? companyName;
   final String? companyDescription;
+  final List<dynamic>? industries;
+  final int? yearFounded;
   final String? companyLogo;
-  final String? industry;
   final String? contactPhone;
+  final String? companySize;
   final String? website;
   final Address? address;
   final DateTime? createdAt;
@@ -14,11 +16,13 @@ class RecruiterProfileModel {
 
   RecruiterProfileModel({
     this.userId,
+    this.yearFounded,
     this.companyName,
+    this.industries,
     this.companyDescription,
     this.companyLogo,
-    this.industry,
     this.contactPhone,
+    this.companySize,
     this.website,
     this.address,
     this.createdAt,
@@ -28,10 +32,12 @@ class RecruiterProfileModel {
   factory RecruiterProfileModel.fromJson(Map<String, dynamic> json) {
     return RecruiterProfileModel(
       userId: json['userId'] as String?,
+      yearFounded: json['yearFounded'] as int?,
       companyName: json['companyName'] as String?,
+      companySize: json['companySize'] as String?,
       companyDescription: json['companyDescription'] as String?,
+      industries: json['industries'] as List<dynamic>?,
       companyLogo: json['companyLogo'] as String?,
-      industry: json['industry'] as String?,
       contactPhone: json['contactPhone'] as String?,
       website: json['website'] as String?,
       address:
@@ -48,10 +54,12 @@ class RecruiterProfileModel {
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
+      'yearFounded': yearFounded,
+      'industries': industries,
       'companyName': companyName,
+      'companySize': companySize,
       'companyDescription': companyDescription,
       'companyLogo': companyLogo,
-      'industry': industry,
       'contactPhone': contactPhone,
       'website': website,
       'address': address?.toJson(),
@@ -62,14 +70,16 @@ class RecruiterProfileModel {
 }
 
 class Address {
-  final String? street;
+  final String? addressLine1;
+  final String? addressLine2;
   final String? city;
   final String? state;
   final String? country;
   final String? postalCode;
 
   Address({
-    this.street,
+    this.addressLine1,
+    this.addressLine2,
     this.city,
     this.state,
     this.country,
@@ -78,7 +88,8 @@ class Address {
 
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
-      street: json['street'] as String?,
+      addressLine1: json['addressLine1'] as String?,
+      addressLine2: json['addressLine2'] as String?,
       city: json['city'] as String?,
       state: json['state'] as String?,
       country: json['country'] as String?,
@@ -88,7 +99,8 @@ class Address {
 
   Map<String, dynamic> toJson() {
     return {
-      'street': street,
+      'addressLine1': addressLine1,
+      'addressLine2': addressLine2,
       'city': city,
       'state': state,
       'country': country,

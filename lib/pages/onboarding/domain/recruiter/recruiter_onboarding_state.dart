@@ -1,80 +1,35 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
 import 'package:equatable/equatable.dart';
 
 class RecruiterOnboardingState extends Equatable {
   final int currentPage;
-  final DateTime? candidateDOB;
-  final ExperienceLevel? candidateExperienceLevel;
-  final List<String>? candidatePreferredDomains;
-  final List<String>? candidatePreferredEmploymentTypes;
-  final List<Skill?>? candidateSkills;
-  final List<Location?>? preferredLocations;
-  final SalaryRange? salaryExpectations;
+  final List<String>? industries;
+  final String? companySize;
   const RecruiterOnboardingState({
     this.currentPage = 0,
-    this.candidateDOB,
-    this.candidateSkills,
-    this.preferredLocations,
-    this.salaryExpectations,
-    this.candidatePreferredEmploymentTypes,
-    this.candidateExperienceLevel,
-    this.candidatePreferredDomains,
+    this.industries,
+    this.companySize,
   });
 
   @override
   List<Object?> get props => [
         currentPage,
-        candidateDOB,
-        candidateExperienceLevel,
-        candidatePreferredDomains,
-        candidatePreferredEmploymentTypes,
-        salaryExpectations,
-        candidateSkills,
-        preferredLocations,
+        industries,
+        companySize,
       ];
 
-  RecruiterOnboardingState.init()
-      : this(
-          currentPage: 0,
-          candidateDOB: DateTime(
-            DateTime.now().year - 10,
-            DateTime.now().month,
-            DateTime.now().day,
-          ),
-          candidateExperienceLevel: null,
-          candidatePreferredDomains: null,
-          salaryExpectations: null,
-          preferredLocations: null,
-          candidateSkills: null,
-          candidatePreferredEmploymentTypes: null,
-        );
+  const RecruiterOnboardingState.init()
+      : this(currentPage: 0, industries: null, companySize: null);
 
   RecruiterOnboardingState copyWith({
-    final Role? role,
     final int? currentPage,
-    final DateTime? candidateDOB,
-    final ExperienceLevel? candidateExperienceLevel,
-    final List<String>? candidatePreferredDomains,
-    final List<String>? candidatePreferredEmploymentTypes,
-    final List<Location?>? preferredLocations,
-    final List<Skill?>? candidateSkills,
-    final SalaryRange? salaryExpectations,
+    final List<String>? industries,
+    final String? companySize,
   }) {
     return RecruiterOnboardingState(
       currentPage: currentPage ?? this.currentPage,
-      candidateDOB: candidateDOB ?? this.candidateDOB,
-      candidatePreferredEmploymentTypes: candidatePreferredEmploymentTypes ??
-          this.candidatePreferredEmploymentTypes,
-      candidatePreferredDomains:
-          candidatePreferredDomains ?? this.candidatePreferredDomains,
-      candidateExperienceLevel:
-          candidateExperienceLevel ?? this.candidateExperienceLevel,
-      candidateSkills: candidateSkills ?? this.candidateSkills,
-      preferredLocations: preferredLocations ?? this.preferredLocations,
-      salaryExpectations: salaryExpectations ?? this.salaryExpectations,
+      industries: industries ?? this.industries,
+      companySize: companySize ?? this.companySize,
     );
   }
 }

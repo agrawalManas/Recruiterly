@@ -1,7 +1,12 @@
+import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
+import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
 import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
+import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
 import 'package:cades_flutter_template/styles/app_colors.dart';
 import 'package:cades_flutter_template/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RecruiterOnboardingStep1 extends StatefulWidget {
@@ -15,28 +20,13 @@ class RecruiterOnboardingStep1 extends StatefulWidget {
 }
 
 class _RecruiterOnboardingStep1State extends State<RecruiterOnboardingStep1> {
-  final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _companyDescriptionController =
-      TextEditingController();
-  // final ImagePicker _picker = ImagePicker();
-  // File? _logoImage;
+  late RecruiterOnboardingCubit _recruiterOnboardingCubit;
 
   @override
-  void dispose() {
-    _companyNameController.dispose();
-    _companyDescriptionController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _recruiterOnboardingCubit = context.read<RecruiterOnboardingCubit>();
   }
-
-  // Future<void> _pickImage() async {
-  //   final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-  //   if (image != null) {
-  //     setState(() {
-  //       _logoImage = File(image.path);
-  //     });
-  //     widget.recruiterOnboardingCubit.updateLogoPath(image.path);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +37,17 @@ class _RecruiterOnboardingStep1State extends State<RecruiterOnboardingStep1> {
         children: [
           Text(
             "Tell us about your company",
-            style: AppTextStyles.body2Regular16(),
+            style: AppTextStyles.body2SemiBold16(
+              color: context.userRole.accentColor,
+            ),
           ),
           24.verticalSpace,
 
-          // Company Logo
+          //------------Company Logo
           Center(
             child: Column(
               children: [
                 GestureDetector(
-                  // onTap: _pickImage,
                   child: Container(
                     width: 120.w,
                     height: 120.h,
@@ -81,29 +72,45 @@ class _RecruiterOnboardingStep1State extends State<RecruiterOnboardingStep1> {
           ),
           24.verticalSpace,
 
-          // Company Name
+          //----------Company Name
           CustomTextfieldWithLabel(
             isRequired: true,
             labelText: 'Company Name',
-            controller: _companyNameController,
+            controller: _recruiterOnboardingCubit.companyNameController,
             textInputAction: TextInputAction.next,
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateCompanyName(value);
-            // },
+            hintText: 'Type here...',
           ),
           16.verticalSpace,
 
-          // Company Description
+          //-----------Company Description
           CustomTextfieldWithLabel(
             isRequired: true,
             labelText: 'Company Description',
-            controller: _companyDescriptionController,
+            controller: _recruiterOnboardingCubit.companyDescriptionController,
             maxLines: 5,
-            hintText: 'Tell us about your company, its mission, and values.',
-            // onChanged: (value) {
-            //   widget.recruiterOnboardingCubit.updateCompanyDescription(value);
-            // },
+            hintText:
+                'Give us a brief about your company, its mission, and values...',
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 8.h,
+            ),
           ),
+          16.verticalSpace,
+
+          //----------Founding Year
+          CustomTextfieldWithLabel(
+            isRequired: true,
+            labelText: 'Year Founded',
+            controller: _recruiterOnboardingCubit.companyFoundedYearController,
+            textInputAction: TextInputAction.next,
+            textInputType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(4),
+            ],
+            hintText: 'eg. 2014',
+          ),
+          16.verticalSpace,
           40.verticalSpace,
         ],
       ),

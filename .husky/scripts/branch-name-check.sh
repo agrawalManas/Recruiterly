@@ -7,7 +7,7 @@
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
 
 # Define your specific branch naming pattern
-PATTERN="^(feat|api|config|fix)\/[a-z0-9]+(-[a-z0-9]+)*$"
+PATTERN="^(feat|api|config|fix)\/[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"
 
 # Skip check if it's one of the default branches
 if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "master" ] || [ "$BRANCH_NAME" = "develop" ]; then

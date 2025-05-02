@@ -45,7 +45,7 @@ class _CandidateOnboardingStep2State extends State<CandidateOnboardingStep2> {
         children: [
           Text(
             "Tell us about your professional background",
-            style: AppTextStyles.body2Medium16(
+            style: AppTextStyles.body2SemiBold16(
               color: context.userRole.accentColor,
             ),
           ),
@@ -69,7 +69,7 @@ class _CandidateOnboardingStep2State extends State<CandidateOnboardingStep2> {
           //----------Experience Level
           Text(
             "Experience Level",
-            style: AppTextStyles.body2SemiBold16(),
+            style: AppTextStyles.body3SemiBold14(),
           ),
           12.verticalSpace,
           BlocBuilder<OnboardingCubit, OnboardingState>(
@@ -103,7 +103,7 @@ class _CandidateOnboardingStep2State extends State<CandidateOnboardingStep2> {
           //----------Preferred Domains
           Text(
             "Preferred Domains",
-            style: AppTextStyles.body2SemiBold16(),
+            style: AppTextStyles.body3SemiBold14(),
           ),
           12.verticalSpace,
           BlocBuilder<OnboardingCubit, OnboardingState>(

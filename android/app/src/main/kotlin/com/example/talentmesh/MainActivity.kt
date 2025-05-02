@@ -1,4 +1,4 @@
-package ai.fenado.demo
+package com.example.talentmesh
 
 import io.flutter.embedding.android.FlutterActivity
 

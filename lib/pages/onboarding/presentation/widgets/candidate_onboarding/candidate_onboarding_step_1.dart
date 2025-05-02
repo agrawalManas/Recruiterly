@@ -37,7 +37,7 @@ class _CandidateOnboardingStep1State extends State<CandidateOnboardingStep1> {
         children: [
           Text(
             "Let's start with your basic information",
-            style: AppTextStyles.body2Medium16(
+            style: AppTextStyles.body2SemiBold16(
               color: context.userRole.accentColor,
             ),
           ),

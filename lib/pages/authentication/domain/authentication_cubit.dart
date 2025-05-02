@@ -8,6 +8,7 @@ import 'package:cades_flutter_template/common/utils/locator.dart';
 import 'package:cades_flutter_template/common/utils/utils.dart';
 import 'package:cades_flutter_template/pages/authentication/domain/authentication_state.dart';
 import 'package:cades_flutter_template/pages/onboarding/models/candidate_profile_model.dart';
+import 'package:cades_flutter_template/pages/onboarding/models/recruiter_profile_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -188,7 +189,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
             );
         log('Created candidate profile!');
       } else if (userModel.role?.userRole == Role.recruiter) {
-        //TODO: add recruiter collection
+        await _firestore.collection('recruiters').doc(user.uid).set(
+              RecruiterProfileModel(
+                userId: user.uid,
+                createdAt: DateTime.now(),
+              ).toJson(),
+            );
         log('Created recruiter profile!');
       }
       Utils.showToast(message: 'Account created successfully!');
