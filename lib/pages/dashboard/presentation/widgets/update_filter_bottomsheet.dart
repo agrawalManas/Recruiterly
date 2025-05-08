@@ -1,14 +1,14 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/common/widgets/bottomsheet/custom_bottomsheet_header.dart';
-import 'package:cades_flutter_template/common/widgets/button/custom_button.dart';
-import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
-import 'package:cades_flutter_template/pages/dashboard/domain/dashboard_cubit.dart';
-import 'package:cades_flutter_template/pages/dashboard/domain/dashboard_state.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/common/widgets/bottomsheet/custom_bottomsheet_header.dart';
+import 'package:talent_mesh/common/widgets/button/custom_button.dart';
+import 'package:talent_mesh/common/widgets/textfield/custom_textfield_with_label.dart';
+import 'package:talent_mesh/pages/dashboard/domain/dashboard_cubit.dart';
+import 'package:talent_mesh/pages/dashboard/domain/dashboard_state.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -102,7 +102,7 @@ class UpdateFilterBottomsheet extends StatelessWidget {
                   blurRadius: 16,
                   offset: const Offset(0, -8),
                   spreadRadius: 0,
-                  color: context.userRole.accentColor.withOpacity(0.3),
+                  color: context.userRole.accentColor.withValues(alpha: 0.3),
                 ),
               ],
             ),

@@ -1,11 +1,11 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/common/utils/locator.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/pages/dashboard/domain/dashboard_cubit.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/dashboard/presentation/widgets/job_overview_card.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/pages/dashboard/domain/dashboard_cubit.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/dashboard/presentation/widgets/job_overview_card.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

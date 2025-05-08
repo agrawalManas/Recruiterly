@@ -1,6 +1,6 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/models/user_model.dart';
-import 'package:cades_flutter_template/common/utils/locator.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/models/user_model.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
 import 'package:flutter/material.dart';
 
 extension ContextExtensions on BuildContext {

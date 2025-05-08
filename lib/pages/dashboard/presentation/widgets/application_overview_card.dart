@@ -1,10 +1,10 @@
-import 'package:cades_flutter_template/common/image_loader.dart';
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/application_model.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/image_loader.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/pages/dashboard/models/application_model.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -38,7 +38,7 @@ class ApplicationOverviewCard extends StatelessWidget {
                 width: 40.w,
                 height: 36.h,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Center(
@@ -128,7 +128,7 @@ class ApplicationOverviewCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: application?.applicationStatus?.applicationStatus
                               .accentColor ??
-                          AppColors.disabledButton.withOpacity(0.5),
+                          AppColors.disabledButton.withValues(alpha: 0.5),
                       shape: BoxShape.circle,
                     ),
                   ),

@@ -1,7 +1,7 @@
-import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/widgets/textfield/custom_textfield_with_label.dart';
+import 'package:talent_mesh/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

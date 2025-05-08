@@ -1,5 +1,5 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart';
 import 'package:equatable/equatable.dart';
 
 class JobPostingState extends Equatable {

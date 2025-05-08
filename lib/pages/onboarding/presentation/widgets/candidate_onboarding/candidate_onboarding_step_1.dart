@@ -1,10 +1,10 @@
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/widgets/date_picker/custom_date_picker_with_label.dart';
-import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_state.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/widgets/date_picker/custom_date_picker_with_label.dart';
+import 'package:talent_mesh/common/widgets/textfield/custom_textfield_with_label.dart';
+import 'package:talent_mesh/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
+import 'package:talent_mesh/pages/onboarding/domain/candidate/candidate_onboarding_state.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

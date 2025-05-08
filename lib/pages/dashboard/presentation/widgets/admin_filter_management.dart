@@ -1,10 +1,10 @@
-import 'package:cades_flutter_template/common/constants.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/common/widgets/switch/custom_switch_with_label.dart';
-import 'package:cades_flutter_template/pages/dashboard/domain/dashboard_cubit.dart';
-import 'package:cades_flutter_template/pages/dashboard/presentation/widgets/update_filter_bottomsheet.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/constants.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/common/widgets/switch/custom_switch_with_label.dart';
+import 'package:talent_mesh/pages/dashboard/domain/dashboard_cubit.dart';
+import 'package:talent_mesh/pages/dashboard/presentation/widgets/update_filter_bottomsheet.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,7 +83,7 @@ class AdminFilterManagement extends StatelessWidget {
       padding: EdgeInsets.all(16.h),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppColors.adminAccent.withOpacity(0.3),
+          color: AppColors.adminAccent.withValues(alpha: 0.3),
         ),
         borderRadius: BorderRadius.circular(12.r),
         color: AppColors.surface,
@@ -96,7 +96,7 @@ class AdminFilterManagement extends StatelessWidget {
             padding: EdgeInsets.all(10.h),
             margin: EdgeInsets.only(bottom: 10.h),
             decoration: BoxDecoration(
-              color: AppColors.adminAccent.withOpacity(0.3),
+              color: AppColors.adminAccent.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Icon(_getIconData(iconName: iconName),

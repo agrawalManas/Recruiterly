@@ -1,9 +1,9 @@
-import 'package:cades_flutter_template/common/image_loader.dart';
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/widgets/chip/custom_chip.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/image_loader.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/widgets/chip/custom_chip.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -63,7 +63,7 @@ class FilterOptionWithHeader<T> extends StatelessWidget {
                               : FontWeight.w300,
                         ),
                         backgroundColor: AppColors.background
-                            .withOpacity(value == index ? 1.0 : 0.9),
+                            .withValues(alpha: value == index ? 1.0 : 0.9),
                         text: getFilterOptionText(filterOptions[index]),
                         // blurRadius: value == index ? 12 : 4,
                         // spreadRadius: value == index ? 4 : 1,
@@ -73,7 +73,8 @@ class FilterOptionWithHeader<T> extends StatelessWidget {
                         //       )
                         //     : AppColors.textSecondary.withOpacity(0.3),
                         borderColor: value == index
-                            ? context.userRole.accentColor.withOpacity(0.9)
+                            ? context.userRole.accentColor
+                                .withValues(alpha: 0.9)
                             : Colors.transparent,
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 4.h,

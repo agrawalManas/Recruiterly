@@ -1,9 +1,9 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/common/utils/locator.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_state.dart';
-import 'package:cades_flutter_template/pages/onboarding/models/recruiter_profile_model.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/pages/onboarding/domain/recruiter/recruiter_onboarding_state.dart';
+import 'package:talent_mesh/pages/onboarding/models/recruiter_profile_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,14 +1,14 @@
 import 'dart:developer';
-import 'package:cades_flutter_template/common/navigation/page_not_found.dart';
-import 'package:cades_flutter_template/common/navigation/routes.dart';
-import 'package:cades_flutter_template/di/authentication_bloc_injection.dart';
-import 'package:cades_flutter_template/di/job_listing_bloc_injection.dart';
-import 'package:cades_flutter_template/di/job_posting_bloc_injection.dart';
-import 'package:cades_flutter_template/di/onboarding_bloc_injection.dart';
-import 'package:cades_flutter_template/di/recruiter_dashboard_bloc_injection.dart';
-import 'package:cades_flutter_template/pages/authentication/presentation/sign_up_view.dart';
-import 'package:cades_flutter_template/pages/authentication/presentation/signin_view.dart';
-import 'package:cades_flutter_template/pages/splash/presentation/splash_screen.dart';
+import 'package:talent_mesh/common/navigation/page_not_found.dart';
+import 'package:talent_mesh/common/navigation/routes.dart';
+import 'package:talent_mesh/di/authentication_bloc_injection.dart';
+import 'package:talent_mesh/di/job_listing_bloc_injection.dart';
+import 'package:talent_mesh/di/job_posting_bloc_injection.dart';
+import 'package:talent_mesh/di/onboarding_bloc_injection.dart';
+import 'package:talent_mesh/di/recruiter_dashboard_bloc_injection.dart';
+import 'package:talent_mesh/pages/authentication/presentation/sign_up_view.dart';
+import 'package:talent_mesh/pages/authentication/presentation/signin_view.dart';
+import 'package:talent_mesh/pages/splash/presentation/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

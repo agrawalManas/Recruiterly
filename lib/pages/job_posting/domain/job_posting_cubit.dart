@@ -1,11 +1,11 @@
 import 'dart:developer';
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/navigation/app_routes.dart';
-import 'package:cades_flutter_template/common/utils/locator.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
-import 'package:cades_flutter_template/pages/job_posting/domain/job_posting_state.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/navigation/app_routes.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart';
+import 'package:talent_mesh/pages/job_posting/domain/job_posting_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

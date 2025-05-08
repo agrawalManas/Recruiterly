@@ -1,9 +1,9 @@
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/widgets/divider/custom_divider.dart';
-import 'package:cades_flutter_template/common/widgets/textfield/textfield_with_search_and_cross_icon.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/widgets/divider/custom_divider.dart';
+import 'package:talent_mesh/common/widgets/textfield/textfield_with_search_and_cross_icon.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -137,7 +137,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                     Radius.circular(8.r),
                   ),
                   border: Border.all(
-                    color: AppColors.textSecondary.withOpacity(0.2),
+                    color: AppColors.textSecondary.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Padding(
@@ -209,7 +209,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: borderColor.withOpacity(0.3),
+                          color: borderColor.withValues(alpha: 0.3),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
@@ -306,116 +306,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildDropdownDialog() {
-    return AlertDialog(
-      alignment: const Alignment(30, 0),
-      contentPadding: EdgeInsets.zero,
-      content: SizedBox(
-        height: 200.h,
-        width: double.maxFinite,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ValueListenableBuilder<bool>(
-              valueListenable: _isOpen,
-              builder: (context, isOpen, child) {
-                if (!isOpen) return const SizedBox.shrink();
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.textPrimary.withOpacity(0.1),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          8.verticalSpace,
-                          //---------SEARCH-FIELD----------
-                          if (!widget.hideSearch) ...[
-                            TextFieldWithSearchAndCrossIcon(
-                              controller: _searchController,
-                              hintText: widget.searchHint,
-                              showPrefix: false,
-                              onCrossIconTapped: () {
-                                if (_searchController.text.trim().isNotEmpty) {
-                                  _searchController.clear();
-                                }
-                              },
-                            ),
-                            CustomDivider(
-                              height: 8.h,
-                            ),
-                            8.verticalSpace,
-                          ],
-
-                          //-----------ITEMS---------
-                          ValueListenableBuilder<List<T>>(
-                            valueListenable: _filteredItems,
-                            builder: (context, items, child) {
-                              return items.isEmpty
-                                  ? Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.w,
-                                        vertical: 16.h,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          widget.noResultsText,
-                                          style: AppTextStyles.body3Regular14(),
-                                        ),
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: items.length,
-                                      itemBuilder: (context, index) {
-                                        final item = items[index];
-                                        return InkWell(
-                                          onTap: () {
-                                            widget.onChanged(item);
-                                            _isOpen.value = false;
-                                            _selectedItem.value = item;
-                                            _searchController.clear();
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 16.w,
-                                              vertical: 12.h,
-                                            ),
-                                            child: Text(
-                                              widget.getLabel(item),
-                                              style: AppTextStyles
-                                                  .body3Regular14(),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

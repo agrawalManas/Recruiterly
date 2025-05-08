@@ -1,6 +1,6 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable

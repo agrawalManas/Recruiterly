@@ -1,5 +1,5 @@
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,7 +57,10 @@ class CustomChip extends StatelessWidget {
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius ?? 16.r),
           border: Border.all(
-            color: borderColor ?? AppColors.textSecondary.withOpacity(0.3),
+            color: borderColor ??
+                AppColors.textSecondary.withValues(
+                  alpha: 0.3,
+                ),
             width: 1,
           ),
         ),

@@ -1,15 +1,15 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/image_loader.dart';
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/common/widgets/button/custom_button.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/domain/job_listing_cubit.dart';
-import 'package:cades_flutter_template/pages/job_listing/domain/job_listing_state.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/image_loader.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/common/widgets/button/custom_button.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/domain/job_listing_cubit.dart';
+import 'package:talent_mesh/pages/job_listing/domain/job_listing_state.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,7 +53,7 @@ class JobOverviewCard extends StatelessWidget {
                 width: 40.w,
                 height: 36.h,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Center(
@@ -90,8 +90,9 @@ class JobOverviewCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: job?.status?.jobStatus.accentColor.withOpacity(0.1) ??
-                      AppColors.disabledButton.withOpacity(0.5),
+                  color: job?.status?.jobStatus.accentColor
+                          .withValues(alpha: 0.1) ??
+                      AppColors.disabledButton.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Text(

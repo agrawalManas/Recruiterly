@@ -1,6 +1,6 @@
-import 'package:cades_flutter_template/pages/dashboard/models/application_model.dart';
-import 'package:cades_flutter_template/pages/dashboard/presentation/widgets/application_overview_card.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/pages/dashboard/models/application_model.dart';
+import 'package:talent_mesh/pages/dashboard/presentation/widgets/application_overview_card.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

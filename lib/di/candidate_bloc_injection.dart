@@ -1,5 +1,5 @@
-import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
-import 'package:cades_flutter_template/pages/onboarding/presentation/widgets/candidate_onboarding/candidate_onboarding_step_1.dart';
+import 'package:talent_mesh/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
+import 'package:talent_mesh/pages/onboarding/presentation/widgets/candidate_onboarding/candidate_onboarding_step_1.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

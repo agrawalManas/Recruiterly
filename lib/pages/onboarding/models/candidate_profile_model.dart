@@ -1,5 +1,5 @@
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CandidateProfileModel {

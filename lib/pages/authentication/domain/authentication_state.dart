@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
-import 'package:cades_flutter_template/common/app_enums.dart';
+import 'package:talent_mesh/common/app_enums.dart';
 
 class AuthenticationState extends Equatable {
   final Role? signupRole;

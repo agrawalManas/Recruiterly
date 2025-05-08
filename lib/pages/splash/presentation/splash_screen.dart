@@ -1,6 +1,6 @@
-import 'package:cades_flutter_template/common/app_assets.dart';
-import 'package:cades_flutter_template/common/image_loader.dart';
-import 'package:cades_flutter_template/pages/authentication/domain/authentication_cubit.dart';
+import 'package:talent_mesh/common/app_assets.dart';
+import 'package:talent_mesh/common/image_loader.dart';
+import 'package:talent_mesh/pages/authentication/domain/authentication_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
