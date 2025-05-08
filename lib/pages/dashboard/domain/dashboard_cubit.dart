@@ -1,16 +1,16 @@
 import 'dart:developer';
-import 'package:cades_flutter_template/common/app_enums.dart';
-import 'package:cades_flutter_template/common/models/user_model.dart';
-import 'package:cades_flutter_template/common/navigation/app_routes.dart';
-import 'package:cades_flutter_template/common/navigation/routes.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/common/utils/locator.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/pages/dashboard/domain/dashboard_state.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/application_model.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart'
-    as Filters;
+import 'package:talent_mesh/common/app_enums.dart';
+import 'package:talent_mesh/common/models/user_model.dart';
+import 'package:talent_mesh/common/navigation/app_routes.dart';
+import 'package:talent_mesh/common/navigation/routes.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/pages/dashboard/domain/dashboard_state.dart';
+import 'package:talent_mesh/pages/dashboard/models/application_model.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart'
+    as filter_model;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,15 +46,15 @@ class DashboardCubit extends Cubit<DashboardState> {
   }
 
   Future<void> getJobFilters() async {
-    if (!dependencyLocator.isRegistered<Filters.JobFilterModel>()) {
+    if (!dependencyLocator.isRegistered<filter_model.JobFilterModel>()) {
       emit(state.copyWith(jobFiltersApiStatus: ApiStatus.loading));
       try {
         final result = await _firestore.collection('jobFilters').get();
         Map<String, dynamic> jsonData =
             result.docs.firstOrNull?.data() as Map<String, dynamic>;
-        final filters = Filters.JobFilterModel.fromMap(jsonData);
-        dependencyLocator.registerSingleton<Filters.JobFilterModel>(
-          Filters.JobFilterModel.fromMap(jsonData),
+        final filters = filter_model.JobFilterModel.fromMap(jsonData);
+        dependencyLocator.registerSingleton<filter_model.JobFilterModel>(
+          filter_model.JobFilterModel.fromMap(jsonData),
         );
         emit(
           state.copyWith(
@@ -181,7 +181,7 @@ class DashboardCubit extends Cubit<DashboardState> {
 
   /// update existing filters, only for admins
   Future<void> _updateFiltersInDB({
-    required Filters.JobFilterModel data,
+    required filter_model.JobFilterModel data,
   }) async {
     await _firestore
         .collection('jobFilters')
@@ -201,7 +201,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     if (_user.role?.userRole == Role.admin) {
       try {
         emit(state.copyWith(addFilterApiStatus: ApiStatus.loading));
-        Filters.JobFilterModel existingFilters = getFilters();
+        filter_model.JobFilterModel existingFilters = getFilters();
         switch (filterType) {
           case JobFilters.locations:
             final locations = text!.split(',');
@@ -209,7 +209,7 @@ class DashboardCubit extends Cubit<DashboardState> {
               locations: [
                 ...List.from(existingFilters.locations ?? []),
                 ...List.generate(locations.length, (index) {
-                  return Filters.Location(
+                  return filter_model.Location(
                     id: Utils.getUUID(),
                     country: 'India',
                     createdAt: DateTime.now(),
@@ -222,7 +222,7 @@ class DashboardCubit extends Cubit<DashboardState> {
             existingFilters = existingFilters.copyWith(
               jobRoles: [
                 ...List.from(existingFilters.jobRoles ?? []),
-                Filters.Filter(
+                filter_model.Filter(
                   id: Utils.getUUID(),
                   createdAt: DateTime.now(),
                   name: text,
@@ -246,7 +246,7 @@ class DashboardCubit extends Cubit<DashboardState> {
               skills: [
                 ...List.from(existingFilters.skills ?? []),
                 ...List.generate(skills.length, (index) {
-                  return Filters.Skill(
+                  return filter_model.Skill(
                     id: Utils.getUUID(),
                     category: null,
                     createdAt: DateTime.now(),
@@ -259,7 +259,7 @@ class DashboardCubit extends Cubit<DashboardState> {
             existingFilters = existingFilters.copyWith(
               experienceLevels: [
                 ...List.from(existingFilters.experienceLevels ?? []),
-                Filters.ExperienceLevel(
+                filter_model.ExperienceLevel(
                   id: Utils.getUUID(),
                   yearsFrom: yearsFrom,
                   yearsTo: yearsTo,
@@ -288,8 +288,9 @@ class DashboardCubit extends Cubit<DashboardState> {
           lastUpdatedBy: _user.name,
         );
         await _updateFiltersInDB(data: filterData);
-        dependencyLocator.unregister<Filters.JobFilterModel>();
-        dependencyLocator.registerSingleton<Filters.JobFilterModel>(filterData);
+        dependencyLocator.unregister<filter_model.JobFilterModel>();
+        dependencyLocator
+            .registerSingleton<filter_model.JobFilterModel>(filterData);
         emit(state.copyWith(addFilterApiStatus: ApiStatus.success));
         Utils.showToast(
           message:

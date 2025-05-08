@@ -1,10 +1,10 @@
 import 'dart:developer';
-import 'package:cades_flutter_template/common/utils/locator.dart';
-import 'package:cades_flutter_template/common/utils/utils.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_state.dart';
-import 'package:cades_flutter_template/pages/onboarding/models/candidate_profile_model.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
+import 'package:talent_mesh/common/utils/utils.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart';
+import 'package:talent_mesh/pages/onboarding/domain/candidate/candidate_onboarding_state.dart';
+import 'package:talent_mesh/pages/onboarding/models/candidate_profile_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,17 +48,17 @@ class CandidateOnboardingCubit extends Cubit<CandidateOnboardingState> {
   }
 
   void onSelectCandidatePreferredDomains(List<dynamic> value) {
-    value.forEach((element) {
+    for (var element in value) {
       _candidatePreferredDomains.add(element.toString());
-    });
+    }
     emit(state.copyWith(candidatePreferredDomains: _candidatePreferredDomains));
     log('preferred domains- $_candidatePreferredDomains');
   }
 
   void onSelectCandidatePreferredEmploymentType(List<dynamic> value) {
-    value.forEach((element) {
+    for (var element in value) {
       _candidatePreferredEmploymentTypes.add(element.toString());
-    });
+    }
     emit(state.copyWith(
       candidatePreferredEmploymentTypes: _candidatePreferredEmploymentTypes,
     ));

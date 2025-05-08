@@ -1,4 +1,4 @@
-import 'package:cades_flutter_template/common/app_enums.dart';
+import 'package:talent_mesh/common/app_enums.dart';
 
 extension StringExtensions on String {
   Role get userRole {
@@ -89,8 +89,9 @@ extension StringExtensions on String {
     // First, try to parse the string as an integer
     final intValue =
         int.tryParse(replaceAll(',', '')); // Remove commas if present
-    if (intValue == null)
+    if (intValue == null) {
       return this; // Return the original string if parsing fails
+    }
 
     // Format the integer with commas and append ₹ symbol
     return '₹ ${intValue.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (Match match) => '${match[1]},')}';
@@ -134,7 +135,7 @@ extension StringExtensions on String {
   String getTimeIn24HourFormat({bool end = false}) {
     try {
       // Split the time string at "to" to get start and end times
-      List<String> times = this.toLowerCase().split(' to ');
+      List<String> times = toLowerCase().split(' to ');
       if (times.length != 2) {
         return "Invalid time format";
       }
@@ -167,7 +168,7 @@ extension StringExtensions on String {
 
   String toCommaSeparatedFormat({bool addSpace = false}) {
     // Convert to string first
-    String numStr = this.toString();
+    String numStr = toString();
 
     // For numbers with decimal parts
     if (numStr.contains('.')) {

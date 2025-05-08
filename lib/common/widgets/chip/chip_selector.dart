@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/widgets/chip/custom_chip.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/widgets/chip/custom_chip.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChipSelector<T> extends StatelessWidget {
@@ -69,7 +69,7 @@ class ChipSelector<T> extends StatelessWidget {
                 description:
                     getDescription != null ? getDescription!(option) : null,
                 backgroundColor: isSelected
-                    ? context.userRole.accentColor.withOpacity(0.05)
+                    ? context.userRole.accentColor.withValues(alpha: 0.05)
                     : AppColors.surface,
                 isSelected: isSelected,
                 textColor: isSelected ? context.userRole.accentColor : null,

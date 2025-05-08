@@ -1,9 +1,9 @@
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/widgets/textfield/custom_textfield_with_label.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/widgets/textfield/custom_textfield_with_label.dart';
+import 'package:talent_mesh/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +52,7 @@ class _RecruiterOnboardingStep1State extends State<RecruiterOnboardingStep1> {
                     width: 120.w,
                     height: 120.h,
                     decoration: BoxDecoration(
-                      color: AppColors.disabledText.withOpacity(0.2),
+                      color: AppColors.disabledText.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: const Icon(

@@ -1,18 +1,18 @@
-import 'package:cades_flutter_template/common/navigation/app_routes.dart';
-import 'package:cades_flutter_template/common/utils/extensions/context_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/enum_extensions.dart';
-import 'package:cades_flutter_template/common/utils/extensions/string_extensions.dart';
-import 'package:cades_flutter_template/common/utils/locator.dart';
-import 'package:cades_flutter_template/common/widgets/button/custom_button.dart';
-import 'package:cades_flutter_template/common/widgets/dropdown/searchable_popup_menu.dart';
-import 'package:cades_flutter_template/common/widgets/switch/custom_switch_with_label.dart';
-import 'package:cades_flutter_template/pages/dashboard/models/job_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/domain/job_listing_cubit.dart';
-import 'package:cades_flutter_template/pages/job_listing/domain/job_listing_state.dart';
-import 'package:cades_flutter_template/pages/job_listing/model/job_filter_model.dart';
-import 'package:cades_flutter_template/pages/job_listing/presentation/widgets/fitler_option_with_header.dart';
-import 'package:cades_flutter_template/styles/app_colors.dart';
-import 'package:cades_flutter_template/styles/app_text_styles.dart';
+import 'package:talent_mesh/common/navigation/app_routes.dart';
+import 'package:talent_mesh/common/utils/extensions/context_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/enum_extensions.dart';
+import 'package:talent_mesh/common/utils/extensions/string_extensions.dart';
+import 'package:talent_mesh/common/utils/locator.dart';
+import 'package:talent_mesh/common/widgets/button/custom_button.dart';
+import 'package:talent_mesh/common/widgets/dropdown/searchable_popup_menu.dart';
+import 'package:talent_mesh/common/widgets/switch/custom_switch_with_label.dart';
+import 'package:talent_mesh/pages/dashboard/models/job_model.dart';
+import 'package:talent_mesh/pages/job_listing/domain/job_listing_cubit.dart';
+import 'package:talent_mesh/pages/job_listing/domain/job_listing_state.dart';
+import 'package:talent_mesh/pages/job_listing/model/job_filter_model.dart';
+import 'package:talent_mesh/pages/job_listing/presentation/widgets/filter_option_with_header.dart';
+import 'package:talent_mesh/styles/app_colors.dart';
+import 'package:talent_mesh/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,7 +56,7 @@ class _FilterBottomsheetState extends State<FilterBottomsheet> {
               ),
               border: Border(
                 bottom: BorderSide(
-                  color: AppColors.surface.withOpacity(0.4),
+                  color: AppColors.surface.withValues(alpha: 0.4),
                   width: 0.5,
                 ),
               ),

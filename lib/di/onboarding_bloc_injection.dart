@@ -1,7 +1,7 @@
-import 'package:cades_flutter_template/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/onboarding_cubit.dart';
-import 'package:cades_flutter_template/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
-import 'package:cades_flutter_template/pages/onboarding/presentation/onboarding_view.dart';
+import 'package:talent_mesh/pages/onboarding/domain/candidate/candidate_onboarding_cubit.dart';
+import 'package:talent_mesh/pages/onboarding/domain/onboarding_cubit.dart';
+import 'package:talent_mesh/pages/onboarding/domain/recruiter/recruiter_onboarding_cubit.dart';
+import 'package:talent_mesh/pages/onboarding/presentation/onboarding_view.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

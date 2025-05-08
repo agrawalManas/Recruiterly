@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ai.fenado.cades_flutter_template"
+    namespace = "ai.fenado.talent_mesh"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "ai.fenado.cades_flutter_template"
+        applicationId = "ai.fenado.talent_mesh"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
